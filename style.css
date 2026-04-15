@@ -1,0 +1,597 @@
+/* -------------------------------------------------------
+   ROOT VARIABLES — Magical Girl Palette
+------------------------------------------------------- */
+:root {
+    --angel-bg: radial-gradient(circle at top, #fff7ff, #ffeaf7, #ffc7e8);
+    --devil-bg: radial-gradient(circle at top, #f7f0ff, #e4c8ff, #c59bff);
+
+    --angel-accent: #ffb6ff;
+    --devil-accent: #c59bff;
+
+    --panel-radius: 26px;
+    --panel-padding: 2rem;
+    --max-width: 1100px;
+
+    --shadow-soft: 0 20px 50px rgba(60, 40, 110, 0.18);
+}
+
+/* -------------------------------------------------------
+   RESET
+------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    overflow-x: hidden;
+}
+
+/* -------------------------------------------------------
+   WORLD BACKGROUNDS
+------------------------------------------------------- */
+body {
+    background: var(--angel-bg);
+    color: #1b1028;
+}
+
+body.world-devil {
+    background: var(--devil-bg);
+    color: #f7f2ff;
+}
+
+/* -------------------------------------------------------
+   INTRO OVERLAY — Fullscreen Magical Girl Entry
+------------------------------------------------------- */
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(255, 247, 255, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+}
+
+/* Entry screen magical-girl gradient */
+#intro-overlay {
+    background: radial-gradient(
+            circle at top,
+            #ffb6ff 0%,
+            #ff9ad5 40%,
+            #c59bff 100%
+    );
+}
+
+#intro-overlay.hidden {
+    display: none;
+}
+
+.intro-inner {
+    text-align: center;
+    padding: 2rem;
+}
+
+.intro-hearts-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.intro-heart {
+    width: 160px;
+    height: auto;
+}
+
+/* -------------------------------------------------------
+   TRANSFORM BUTTON — Magical Pulse
+------------------------------------------------------- */
+.transform-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 1rem 3rem;
+    background: linear-gradient(120deg, #ffb6ff, #ff9ad5);
+    color: #1b1028;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 18px 40px rgba(179, 124, 255, 0.7);
+    animation: pulse 1.6s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+/* -------------------------------------------------------
+   CANVAS — Floating Hearts + Glitter Storm
+------------------------------------------------------- */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* -------------------------------------------------------
+   HEADER
+------------------------------------------------------- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(18px);
+    background: rgba(255, 243, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+body.world-devil .site-header {
+    background: rgba(15, 8, 30, 0.78);
+    border-bottom-color: rgb(27, 16, 40);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+}
+
+.nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-link {
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+}
+
+.nav-link:hover {
+    background: rgba(249, 162, 255, 0.6);
+}
+
+body.world-devil .nav-link:hover {
+    background: rgb(88, 39, 172);
+}
+
+/* -------------------------------------------------------
+   HEADER MASCOTS
+------------------------------------------------------- */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.header-mascot {
+    width: 70px;
+    height: auto;
+    transform: translateY(-14px);
+}
+
+.header-mascot-angel { display: block; }
+.header-mascot-devil { display: none; }
+
+body.world-devil .header-mascot-angel { display: none; }
+body.world-devil .header-mascot-devil { display: block; }
+
+/* -------------------------------------------------------
+   MODE TOGGLE
+------------------------------------------------------- */
+.mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.toggle-track {
+    width: 3.2rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    background: var(--angel-accent);
+    padding: 0.15rem;
+}
+
+body.world-devil .toggle-track {
+    background: var(--devil-accent);
+}
+
+.toggle-orb {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background: #fff;
+    transition: margin-left 0.15s linear;
+}
+
+body.world-devil .toggle-orb {
+    margin-left: 1.4rem;
+}
+
+.toggle-label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.7rem;
+    line-height: 1.1;
+}
+
+.label-angel,
+.label-devil {
+    opacity: 0.5;
+}
+
+body.world-angel .label-angel { opacity: 1; }
+body.world-devil .label-devil { opacity: 1; }
+
+/* -------------------------------------------------------
+   MAIN LAYOUT
+------------------------------------------------------- */
+.main-layout {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+}
+
+/* -------------------------------------------------------
+   PANELS
+------------------------------------------------------- */
+.panel {
+    margin-bottom: 2rem;
+    padding: var(--panel-padding);
+    border-radius: var(--panel-radius);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panel:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(255, 182, 255, 0.6);
+}
+
+body.world-angel .panel:hover {
+    box-shadow: 0 20px 50px rgba(255, 182, 255, 0.6);
+}
+
+body.world-devil .panel {
+    background: rgba(10, 8, 24, 0.9);
+    border-color: rgb(0, 0, 0);
+}
+
+body.world-devil .panel:hover {
+    box-shadow: 0 20px 50px rgba(179, 124, 255, 0.6);
+}
+
+/* Fix: Ensure sections scroll correctly under sticky header */
+section {
+    scroll-margin-top: 120px;
+}
+
+/* -------------------------------------------------------
+   PROFILE SECTION
+------------------------------------------------------- */
+.profile-flex {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.portrait-wrapper {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    flex-shrink: 0;
+}
+
+.profile-portrait {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 3;
+    position: relative;
+    box-shadow: 0 0 25px rgba(255, 182, 255, 0.7),
+    0 0 45px rgba(179, 124, 255, 0.6);
+}
+
+.sparkle-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(#ffb6ff, #ff9ad5, #c59bff, #ffb6ff);
+    filter: blur(8px) brightness(1.4);
+    animation: sparkle-rotate 6s linear infinite;
+    opacity: 0.9;
+}
+
+.sparkle-overlay {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    pointer-events: none;
+    background-image:
+            radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 60%),
+            radial-gradient(circle, rgba(255,182,255,0.8) 0%, transparent 70%),
+            radial-gradient(circle, rgba(179,124,255,0.8) 0%, transparent 70%);
+    background-size: 12px 12px, 18px 18px, 22px 22px;
+    animation: sparkle-twinkle 2.4s infinite ease-in-out alternate;
+    opacity: 0.7;
+}
+
+@keyframes sparkle-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes sparkle-twinkle {
+    0% { opacity: 0.4; transform: scale(1); }
+    100% { opacity: 0.9; transform: scale(1.04); }
+}
+
+/* -------------------------------------------------------
+   BUTTONS
+------------------------------------------------------- */
+.btn-primary {
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    background: linear-gradient(120deg, #ffb6ff, #ff9ad5);
+    color: #1b1028;
+    border: none;
+    box-shadow: 0 10px 10px rgba(179, 124, 255, 0.5);
+    cursor: pointer;
+}
+
+.btn-ghost {
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid rgb(207, 138, 214);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+a.btn-primary,
+a.btn-ghost {
+    text-decoration: none;
+}
+
+/* -------------------------------------------------------
+   WORK GRID
+------------------------------------------------------- */
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.work-card {
+    padding: 1.4rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: var(--shadow-soft);
+}
+
+body.world-devil .work-card {
+    background: rgba(10, 8, 24, 0.9);
+    border-color: rgb(255, 255, 255);
+}
+
+/* -------------------------------------------------------
+   FOOTER
+------------------------------------------------------- */
+.footer-art {
+    width: 160px;
+    display: block;
+    margin: 0 auto 1rem;
+    filter: drop-shadow(0 0 12px rgba(255, 182, 255, 0.6))
+    drop-shadow(0 0 18px rgba(179, 124, 255, 0.5));
+}
+
+.site-footer {
+    text-align: center;
+    padding: 1.5rem 1rem 2rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE — FULL MOBILE SUPPORT
+------------------------------------------------------- */
+
+/* TABLET (≤ 1024px) */
+@media (max-width: 1024px) {
+    .main-layout {
+        padding: 2.5rem 1.25rem 3rem;
+    }
+
+    .panel {
+        padding: 1.6rem;
+    }
+
+    .header-mascot {
+        width: 60px;
+        transform: translateY(-10px);
+    }
+}
+
+/* MOBILE (≤ 768px) */
+@media (max-width: 768px) {
+
+    /* ENTRY SCREEN */
+    #intro-overlay {
+        padding: 1.5rem 1rem;
+    }
+
+    .intro-inner {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .intro-hearts-row {
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .intro-heart {
+        width: 120px;
+    }
+
+    .transform-btn {
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+    }
+
+    /* HEADER */
+    .site-header {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        padding: 0.6rem 1rem;
+        text-align: center;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem;
+    }
+
+    .header-right {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .header-mascot {
+        width: 55px;
+        transform: translateY(-6px);
+    }
+
+    /* MODE TOGGLE */
+    .toggle-track {
+        width: 2.8rem;
+        height: 1.6rem;
+    }
+
+    .toggle-orb {
+        width: 1.3rem;
+        height: 1.3rem;
+    }
+
+    body.world-devil .toggle-orb {
+        margin-left: 1.2rem;
+    }
+
+    /* WORLD LAYOUT (ANGEL + DEVIL) */
+    .world {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+
+    /* PANELS */
+    .panel {
+        width: 100%;
+        max-width: 600px;
+        padding: 1.4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .panel h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .panel p {
+        font-size: 0.95rem;
+        line-height: 1.55;
+    }
+
+    /* PROFILE SECTION */
+    .profile-flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .portrait-wrapper {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+    }
+
+    /* WORK GRID */
+    .work-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    /* FOOTER */
+    .footer-art {
+        width: 120px;
+    }
+
+    .site-footer {
+        font-size: 0.75rem;
+        padding: 1rem 0.5rem 1.5rem;
+    }
+}
+
+/* SMALL MOBILE (≤ 480px) */
+@media (max-width: 480px) {
+
+    .intro-heart {
+        width: 100px;
+    }
+
+    .transform-btn {
+        padding: 0.7rem 1.6rem;
+        font-size: 0.85rem;
+    }
+
+    .panel {
+        padding: 1.2rem;
+    }
+
+    .portrait-wrapper {
+        width: 150px;
+        height: 150px;
+    }
+
+    .header-mascot {
+        width: 48px;
+    }
+
+    .footer-art {
+        width: 100px;
+    }
+}
+
+
